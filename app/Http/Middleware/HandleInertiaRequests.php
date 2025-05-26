@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
@@ -35,9 +34,15 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            //
-        ];
+        // return [
+        //     ...parent::share($request),
+        //     //
+        // ];
+        return array_merge(parent::share($request), [
+            'auth' => fn() => $request->user() ? [
+                'user'  => $request->user(),
+                'roles' => $request->user()->getRoleNames()->toArray(),
+            ] : null,
+        ]);
     }
 }

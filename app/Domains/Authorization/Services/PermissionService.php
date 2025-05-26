@@ -2,6 +2,8 @@
 namespace App\Domains\Authorization\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -38,5 +40,28 @@ class PermissionService
     public function userHasPermission(User $user, string $permissionName): bool
     {
         return $user->hasPermissionTo($permissionName);
+    }
+    public function linkChildToParent(string $childEmail, string $childPassword)
+    {
+        $child = User::where('email', $childEmail)->first();
+
+        if (! $child) {
+            return 'Vaikas nerastas';
+        }
+
+        if (! Hash::check($childPassword, $child->password)) {
+            return 'Neteisingas slaptažodis';
+        }
+
+        $parent = Auth::user();
+
+        $child->parent_id = $parent->id;
+        $child->save();
+
+        // Priskiriame roles per spatie/permission
+        $child->syncRoles(['child']);
+        $parent->syncRoles(['parent']);
+
+        return true;
     }
 }

@@ -58,17 +58,32 @@ const login = () => {
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </NavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div
+                                v-if="$page.props.auth?.user && $page.props.auth.roles.some((role) => ['child', 'parent'].includes(role))"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
                                 <NavLink :href="route('test')" :active="route().current('test')"> Test </NavLink>
                             </div>
-                            <div v-if="$page.props.auth.user" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div
+                                v-if="$page.props.auth?.user && $page.props.auth.roles.some((role) => ['admin', 'parent', 'child'].includes(role))"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
                                 <NavLink :href="route('rooms.index')" :active="route().current('rooms.index')"> Rooms </NavLink>
                             </div>
-                            <div v-if="$page.props.auth.user" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div
+                                v-if="$page.props.auth && $page.props.auth.roles.includes('admin')"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
                                 <NavLink :href="route('assign-role-ui')" :active="route().current('assign-role-ui')"> Admin </NavLink>
                             </div>
+                            <div
+                                v-if="$page.props.auth && $page.props.auth.roles.includes('parent')"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
+                                <NavLink :href="route('parents_panel')" :active="route().current('parents_panel')"> Parents panel </NavLink>
+                            </div>
                         </div>
-                        <!-- <div>{{ $page.props.auth.user }}</div> -->
+                        <!-- <div>{{ $page.props.auth?.roles }}</div> -->
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <div class="relative ms-3">
                                 <!-- Teams Dropdown -->
@@ -170,7 +185,7 @@ const login = () => {
                                                 type="button"
                                                 class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:bg-gray-50 focus:outline-none active:bg-gray-50"
                                             >
-                                                {{ $page.props.auth.user ? $page.props.auth.user.name : 'Guest' }}
+                                                {{ $page.props.auth?.user ? $page.props.auth.user.name : 'Guest' }}
 
                                                 <svg
                                                     class="-me-0.5 ms-2 size-4"
@@ -190,7 +205,7 @@ const login = () => {
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">Manage Account</div>
 
-                                        <DropdownLink v-if="$page.props.auth.user" :href="route('profile.show')"> Profile </DropdownLink>
+                                        <DropdownLink v-if="$page.props.auth?.user" :href="route('profile.show')"> Profile </DropdownLink>
 
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                                             API Tokens
@@ -203,12 +218,12 @@ const login = () => {
                                             @submit.prevent="
                                                 {
                                                     {
-                                                        $page.props.auth.user ? logout() : login();
+                                                        $page.props.auth?.user ? logout() : login();
                                                     }
                                                 }
                                             "
                                         >
-                                            <DropdownLink v-if="$page.props.auth.user" as="button"> Log Out </DropdownLink>
+                                            <DropdownLink v-if="$page.props.auth?.user" as="button"> Log Out </DropdownLink>
                                             <DropdownLink v-else as="button"> Log In </DropdownLink>
                                         </form>
                                     </template>
@@ -241,6 +256,7 @@ const login = () => {
                             </button>
                         </div>
                     </div>
+                    <!-- <div>{{ $page.props.auth.roles }}</div> -->
                 </div>
 
                 <!-- Responsive Navigation Menu -->
@@ -262,10 +278,10 @@ const login = () => {
 
                             <div>
                                 <div class="text-base font-medium text-gray-800">
-                                    {{ $page.props.auth.user ? $page.props.auth.user.name : 'Guest' }}
+                                    {{ $page.props.auth?.user ? $page.props.auth.user.name : 'Guest' }}
                                 </div>
                                 <div class="text-sm font-medium text-gray-500">
-                                    {{ $page.props.auth.user ? $page.props.auth.user.email : 'No email' }}
+                                    {{ $page.props.auth?.user ? $page.props.auth.user.email : 'No email' }}
                                 </div>
                             </div>
                         </div>

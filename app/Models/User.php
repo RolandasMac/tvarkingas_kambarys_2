@@ -2,6 +2,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Domains\Room\Models\Room;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,5 +64,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
         ];
+    }
+    public function roomLogs()
+    {
+        return $this->hasMany(Room::class);
+    }
+// Jei vartotojas yra tėvas:
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+// Jei vartotojas yra vaikas:
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }

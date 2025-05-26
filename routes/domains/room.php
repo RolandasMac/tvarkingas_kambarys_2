@@ -7,7 +7,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/room', [RoomController::class, 'index']);
 
-Route::middleware(['auth', 'role:vaikas|tevas|admin'])->group(function () {
+Route::middleware(['auth', 'role:child|parent|admin'])->group(function () {
     Route::resource('rooms', RoomController::class)->only([
         'index', 'create', 'store', 'show', 'destroy',
     ])->names('rooms');

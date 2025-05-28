@@ -17,10 +17,18 @@ class Room extends Model implements HasMedia
         'time_of_day',
         'comment',
         'analysis',
+        'analysis_summary',
+        'raw_analysis_data',
+        'analyzed_at',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    protected $casts = [
+        'analysis_summary'  => 'array',
+        'raw_analysis_data' => 'array',
+        'analyzed_at'       => 'datetime',
+    ];
 }

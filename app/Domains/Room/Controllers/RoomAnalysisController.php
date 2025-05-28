@@ -26,14 +26,15 @@ class RoomAnalysisController extends Controller
         $imageContent = file_get_contents($imageFile->getRealPath());
 
         if (! $imageContent) {
+            // Reikia kažkokio notifer, kad frontas gautų pranešimą
             return response()->json([
                 'status'  => 'error',
                 'message' => 'Failed to read photo content.',
             ], 500);
         }
-
+        return dd($imageContent);
         try {
-            // Delegate the analysis to the service
+            // Perduodame į servisą
             $analysisResult = $this->roomAnalysisService->analyzeImage($imageContent);
 
             return response()->json([

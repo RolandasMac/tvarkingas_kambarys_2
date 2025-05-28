@@ -2,6 +2,7 @@
 namespace App\Domains\Room\Services;
 
 use App\Domains\Room\Actions\AnalyzeRoomImageAction;
+use App\Domains\Room\Jobs\SendPhotoLogJob;
 use App\Domains\Room\Models\Room;
 use Illuminate\Support\Facades\Request;
 
@@ -41,15 +42,27 @@ class RoomService
 
         // Sukuriam Room įrašą
         $room = Room::create([
-            // 'user_id'     => auth()->id(),
-            'time_of_day' => 'vakaras',
-            'comment'     => 'comment',
-            'user_id'     => 1,
-            'analysis'    => null, // pildysime vėliau
+            'user_id'     => auth()->id(),
+            'time_of_day' => $data['time_of_day'],
+            'comment'     => $data['comment'],
+            'analysis'    => null, // pildysiu vėliau
         ]);
 
         // Pridedame failą prie media library
-        $room->addMediaFromRequest('photo')->toMediaCollection('photos');
+        $media    = $room->addMediaFromRequest('photo')->toMediaCollection('photos');
+        $filePath = $media->getPath();
+        $mediaId  = $media->id;
+        $userId   = auth()->id();
+
+        // Išsiunčiame duomenis ir failo kelią į Job'ą
+        SendPhotoLogJob::dispatch([
+            'room_id'     => $room->id, // Perduodame kambario ID, jei reikės atnaujinti analysis lauką
+            'media_id'    => $mediaId,  // Perduodame media ID
+            'file_path'   => $filePath, // Perduodame failo kelią
+            'user_id'     => $userId,
+            'time_of_day' => $data['time_of_day'],
+            'comment'     => $data['comment'],
+        ]);
 
         return $room;
     }

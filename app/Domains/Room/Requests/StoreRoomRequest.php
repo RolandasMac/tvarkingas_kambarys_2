@@ -13,9 +13,9 @@ class StoreRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photo' => 'required|image|mimes:jpg,jpeg,png',
-            // 'name'        => 'required|string|max:255',
-            // 'description' => 'nullable|string',
+            'photo'       => 'required|image|mimes:jpg,jpeg,png',
+            'time_of_day' => 'required|in:rytas,vakaras',
+            'comment'     => 'nullable|string',
         ];
     }
 }

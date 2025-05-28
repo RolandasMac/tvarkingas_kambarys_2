@@ -4,7 +4,6 @@ use App\Domains\Authorization\Controllers\ParentController;
 use App\Domains\Authorization\Controllers\UserController;
 use App\Domains\Room\Controllers\ChildController;
 use App\Domains\Room\Controllers\ParentRoomController;
-use App\Domains\Room\Controllers\RoomAnalysisController;
 
 Route::get('/setup-roles', [UserController::class, 'setup']);
 Route::get('/assign-role/{user}/{role}', [UserController::class, 'assign']);
@@ -29,6 +28,7 @@ Route::middleware(['auth', 'role:child'])->prefix('child')->group(function () {
     Route::get('/child_panel', [ChildController::class, 'showChildPanel'])->name('show_child_panel');
     Route::post('/send-photo', [ChildController::class, 'sendPhoto'])->name('send_photo');
     Route::get('/show-sendPhoto-page', [ChildController::class, 'showSendPhotoPage'])->name('show-sendPhoto-page');
-    Route::post('/room-analysis', [RoomAnalysisController::class, 'analyze'])->name('send_photo');
+    // Route::post('/room-analysis', [RoomAnalysisController::class, 'analyze'])->name('send_photo');
+    Route::post('/room-analysis', [ChildController::class, 'sendPhoto'])->name('send_photo');
 
 });

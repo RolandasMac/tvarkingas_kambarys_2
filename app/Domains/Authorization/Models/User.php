@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Domains\Authorization\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Domains\Room\Models\Room;

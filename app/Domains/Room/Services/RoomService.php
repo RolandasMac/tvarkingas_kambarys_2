@@ -79,4 +79,17 @@ class RoomService
 
         return response()->json(['message' => 'Nuotrauka įkelta sėkmingai']);
     }
+    public function getRoomsForUser($user)
+    {
+        return $user->roomLogs()->get();
+    }
+    public function getRoomsForChild($user)
+    {
+        return $user->children()->with('roomLogs')->get()->map(function ($child) {
+            return [
+                'user' => $child,
+                'logs' => $child->roomLogs,
+            ];
+        });
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 namespace App\Domains\Authorization\Controllers;
 
+use App\Domains\Authorization\Models\User;
 use App\Domains\Authorization\Services\PermissionService;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
@@ -54,30 +54,5 @@ class UserController extends Controller
         // compact('rooms')
         return Inertia::render('Admin/AssignRole', ["data" => $this->usersAndRoles()]);
 
-    }
-    public function addChild(Request $request)
-    {
-        // dd($request->all());
-        $result = $this->permissionService->linkChildToParent(
-            $request->child_email,
-            $request->child_password
-        );
-
-        if ($result !== true) {
-            // Grąžinam klaidą į formą
-            return back()->withErrors(['child_password' => $result])->withInput();
-        }
-
-        return redirect()->route('parents_panel')->with('success', 'Vaikas sėkmingai priskirtas.');
-    }
-    public function showParentPanel()
-    {
-        // return dd(auth()->user());
-        return Inertia::render('Parent/ParentPanel', ['children' => auth()->user()->children]);
-
-    }
-    public function schowAddChild()
-    {
-        return Inertia::render('Parent/AddChild');
     }
 }

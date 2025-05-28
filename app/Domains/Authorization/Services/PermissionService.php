@@ -1,7 +1,7 @@
 <?php
 namespace App\Domains\Authorization\Services;
 
-use App\Models\User;
+use App\Domains\Authorization\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;

@@ -82,8 +82,14 @@ const login = () => {
                             >
                                 <NavLink :href="route('parents_panel')" :active="route().current('parents_panel')"> Parents panel </NavLink>
                             </div>
+                            <div
+                                v-if="$page.props.auth && $page.props.auth.roles.includes('child')"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
+                                <NavLink :href="route('show_child_panel')" :active="route().current('child_panel')"> Child panel </NavLink>
+                            </div>
                         </div>
-                        <!-- <div>{{ $page.props.auth?.roles }}</div> -->
+                        <div>{{ $page.props.auth?.roles }}</div>
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <div class="relative ms-3">
                                 <!-- Teams Dropdown -->
@@ -210,7 +216,7 @@ const login = () => {
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                                             API Tokens
                                         </DropdownLink>
-
+                                        <DropdownLink v-if="!$page.props.auth?.user" :href="route('register')"> Register </DropdownLink>
                                         <div class="border-t border-gray-200" />
 
                                         <!-- Authentication -->

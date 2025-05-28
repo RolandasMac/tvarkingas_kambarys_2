@@ -26,6 +26,18 @@
                 Pridėti vaiką
             </NavLink>
         </div>
+        <!-- Žiūrėti vaikų logus forma -->
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Žiūrėti ataskaitą</h2>
+
+            <NavLink
+                :href="route('show-childrens-logs')"
+                :active="route().current('show-childrens-logs')"
+                class="flex h-10 items-center justify-center rounded bg-blue-600 px-4 text-white"
+            >
+                Žiūrėti ataskaitą
+            </NavLink>
+        </div>
     </div>
 </template>
 

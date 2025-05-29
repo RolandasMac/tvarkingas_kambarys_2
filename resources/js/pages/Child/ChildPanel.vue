@@ -1,8 +1,8 @@
 <template>
     <div class="mx-auto max-w-5xl p-6">
         <h1 class="mb-6 text-3xl font-bold text-gray-800">Tvarkingo kambario žurnalas</h1>
-        <!-- <p>{{ logs }}</p>
-        <p>{{ $page.props }}</p> -->
+        <p>{{ logs }}</p>
+        <p>{{ $page.props }}</p>
         <!-- <SendPhoto /> -->
         <!-- Send phot button -->
         <div>
@@ -26,9 +26,10 @@
                         <p class="text-sm text-gray-500">{{ formatDate(log.created_at) }}</p>
                     </div>
 
-                    <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-                        {{ log.analysis }}
+                    <span v-if="log.analysis_summary" class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
+                        {{ log.analysis_summary.overall_status }}
                     </span>
+                    <span v-else class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700"> No analysis </span>
                 </div>
 
                 <p v-if="log.description" class="mt-3 text-gray-700">

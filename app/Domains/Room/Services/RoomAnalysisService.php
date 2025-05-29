@@ -156,7 +156,7 @@ class RoomAnalysisService
             if (in_array('newspapers', $analysisSummary['messy_items'])) {
                 $analysisSummary['suggestions'][] = 'Neatly stack or recycle old newspapers.';
             }
-            // Galite pridėti daugiau pasiūlymų pagal naujus raktinius žodžius
+            // Galima pridėti daugiau pasiūlymų pagal naujus raktinius žodžius
         }
 
         return [

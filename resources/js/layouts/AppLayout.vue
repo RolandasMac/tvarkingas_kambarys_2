@@ -55,20 +55,20 @@ const login = () => {
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </NavLink>
-                            </div>
-                            <div
+                            </div> -->
+                            <!-- <div
                                 v-if="$page.props.auth?.user && $page.props.auth.roles.some((role) => ['child', 'parent'].includes(role))"
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
                                 <NavLink :href="route('test')" :active="route().current('test')"> Test </NavLink>
-                            </div>
+                            </div> -->
                             <div
-                                v-if="$page.props.auth?.user && $page.props.auth.roles.some((role) => ['admin', 'parent', 'child'].includes(role))"
+                                v-if="$page.props.auth?.user && $page.props.auth.roles.some((role) => ['admin'].includes(role))"
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
-                                <NavLink :href="route('rooms.index')" :active="route().current('rooms.index')"> Rooms </NavLink>
+                                <NavLink :href="route('rooms.index')" :active="route().current('rooms.index')"> All Rooms logs </NavLink>
                             </div>
                             <div
                                 v-if="$page.props.auth && $page.props.auth.roles.includes('admin')"

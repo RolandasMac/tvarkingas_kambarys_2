@@ -4,7 +4,6 @@ namespace App\Domains\Room\Services;
 use App\Domains\Room\Actions\AnalyzeRoomImageAction;
 use App\Domains\Room\Jobs\SendPhotoLogJob;
 use App\Domains\Room\Models\Room;
-use Illuminate\Support\Facades\Request;
 
 class RoomService
 {
@@ -29,7 +28,16 @@ class RoomService
     }
     public function getAll()
     {
-        return Room::latest()->get();
+        // return Room::latest()->get();
+        // return Room::with(['user', 'user.parent'])->get();
+        return $rooms = Room::with(['user', 'user.parent'])
+            ->select('rooms.*')
+            ->leftJoin('users as child_user', 'rooms.user_id', '=', 'child_user.id')
+            ->leftJoin('users as parent_user', 'child_user.parent_id', '=', 'parent_user.id')
+            ->orderBy('parent_user.name')
+            ->orderBy('child_user.name')
+            ->orderBy('rooms.created_at', 'desc')
+            ->get();
     }
 
     public function find(int $id): Room
@@ -72,26 +80,26 @@ class RoomService
         $room = Room::findOrFail($id);
         return $room->delete();
     }
-    public function store(Request $request)
-    {
-        // $request->validate([
-        //     'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        // ]);
+    // public function store(Request $request)
+    // {
+    //     // $request->validate([
+    //     //     'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+    //     // ]);
 
-        // Sukuriam Room įrašą
-        // $room = Room::create([
-        //     // 'user_id'     => auth()->id(),
-        //     'time_of_day' => $request->input('time_of_day'),
-        //     'comment'     => $request->input('comment'),
-        //     'user_id'     => 1,
-        //     'analysis'    => null, // pildysime vėliau
-        // ]);
+    //     // Sukuriam Room įrašą
+    //     // $room = Room::create([
+    //     //     // 'user_id'     => auth()->id(),
+    //     //     'time_of_day' => $request->input('time_of_day'),
+    //     //     'comment'     => $request->input('comment'),
+    //     //     'user_id'     => 1,
+    //     //     'analysis'    => null, // pildysime vėliau
+    //     // ]);
 
-        // // Pridedame failą prie media library
-        // $room->addMediaFromRequest('photo')->toMediaCollection('photos');
+    //     // // Pridedame failą prie media library
+    //     // $room->addMediaFromRequest('photo')->toMediaCollection('photos');
 
-        return response()->json(['message' => 'Nuotrauka įkelta sėkmingai']);
-    }
+    //     return response()->json(['message' => 'Nuotrauka įkelta sėkmingai']);
+    // }
     public function getRoomsForUser($user)
     {
         return $user->roomLogs()->get();

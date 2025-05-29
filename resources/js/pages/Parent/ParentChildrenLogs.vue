@@ -19,9 +19,10 @@
                                 <p class="text-sm text-gray-500">{{ formatDate(room_log.created_at) }}</p>
                             </div>
 
-                            <span class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                                {{ room_log.analysis }}
+                            <span v-if="room_log.analysis_summary" class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                                {{ room_log.analysis_summary.overall_status }}
                             </span>
+                            <span v-else class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700"> No analysis </span>
                         </div>
                     </div>
                 </div>

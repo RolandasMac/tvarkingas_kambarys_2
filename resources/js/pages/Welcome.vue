@@ -5,8 +5,8 @@ import AppLayout from '@/layouts/AppLayout.vue';
 <template>
     <div>
         <AppLayout>
-            <h2 class="mb-4 text-2xl font-semibold">Sveiki atvykę į pagrindinį puslapį!</h2>
-            <p>Čia yra mano Vue + Inertia pagrindinis puslapis su layout'u.</p>
+            <h2 class="mb-4 text-2xl font-semibold">Sveiki prisijungę prie aplikacijos "Tvarkingas-kambarys"!</h2>
+            <p>Kad toliau naudotis aplikacija turite prisiregitruoti ir paprašyti administratoriau, kad suteiktų reikiamas teises.</p>
         </AppLayout>
     </div>
 </template>

@@ -38,12 +38,4 @@ class ParentController extends Controller
     {
         return Inertia::render('Parent/AddChild');
     }
-    // public function showChildrensLogs()
-    // {
-    //     $user = auth()->user();
-    //     $logs = $this->roomService->getRoomsForChild($user);
-    //     // return dd($logs);
-    //     return Inertia::render('Parent/ParentChildrenLogs', ['logs' => $logs]);
-
-    // }
 }

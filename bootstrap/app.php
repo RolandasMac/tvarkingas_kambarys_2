@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckUserBlockedStatus;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \App\Http\Middleware\CheckUserBlockedStatus::class,
         ]);
 
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
@@ -26,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            CheckUserBlockedStatus::class,
         ]);
         $middleware->alias([
             'role'               => \Spatie\Permission\Middleware\RoleMiddleware::class,

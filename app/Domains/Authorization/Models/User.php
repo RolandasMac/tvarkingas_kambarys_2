@@ -30,6 +30,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_blocked',
+        'parent_id',
+    ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'is_blocked'        => 'boolean',
     ];
 
     /**
@@ -63,6 +69,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
+            'is_blocked'        => 'boolean',
         ];
     }
     public function roomLogs()

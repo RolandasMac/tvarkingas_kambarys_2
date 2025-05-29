@@ -1,12 +1,12 @@
 <template>
-    <div class="mx-auto max-w-5xl p-6">
+    <div class="mx-auto flex max-w-5xl flex-col gap-3 p-6">
         <h1 class="mb-6 text-3xl font-bold text-gray-800">Tvarkingo kambario žurnalas</h1>
-        <p>{{ logs }}</p>
-        <p>{{ $page.props }}</p>
+        <!-- <p>{{ logs }}</p>
+        <p>{{ $page.props }}</p> -->
         <!-- <SendPhoto /> -->
         <!-- Send phot button -->
         <div>
-            <h2 class="mb-4 text-xl font-semibold">Siųsti nuotrauką</h2>
+            <!-- <h2 class="mb-4 text-xl font-semibold">Siųsti nuotrauką</h2> -->
 
             <NavLink
                 :href="route('show-sendPhoto-page')"

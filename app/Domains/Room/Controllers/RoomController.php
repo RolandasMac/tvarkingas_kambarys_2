@@ -3,8 +3,10 @@ namespace App\Domains\Room\Controllers;
 
 use App\Domains\Room\Requests\StoreRoomRequest;
 use App\Domains\Room\Services\RoomService;
+use App\Domains\Room\Services\RoomsLogsExport;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RoomController extends Controller
 {
@@ -45,5 +47,14 @@ class RoomController extends Controller
     {
         $this->roomService->delete($id);
         return redirect()->route('rooms.index')->with('success', 'Kambarys ištrintas.');
+    }
+    public function exportRoomsLogsCsv()
+    {
+        // Patikriname leidimą eksportuoti vartotojus (pvz., tik administratoriams)
+        // if (!auth()->user()->hasRole('admin')) {
+        //     abort(403, 'Neturite teisių eksportuoti vartotojus.');
+        // }
+
+        return Excel::download(new RoomsLogsExport, 'roomLogs.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 }

@@ -53,7 +53,7 @@ class RoomService
             'user_id'     => auth()->id(),
             'time_of_day' => $data['time_of_day'],
             'comment'     => $data['comment'],
-            'analysis'    => null, // pildysiu vėliau
+            // 'analysis'    => null, // pildysiu vėliau
         ]);
 
         // Pridedame failą prie media library
@@ -64,9 +64,9 @@ class RoomService
 
         // Išsiunčiame duomenis ir failo kelią į Job'ą
         SendPhotoLogJob::dispatch([
-            'room_id'     => $room->id, // Perduodame kambario ID, jei reikės atnaujinti analysis lauką
-            'media_id'    => $mediaId,  // Perduodame media ID
-            'file_path'   => $filePath, // Perduodame failo kelią
+            'room_id'     => $room->id,
+            'media_id'    => $mediaId,
+            'file_path'   => $filePath,
             'user_id'     => $userId,
             'time_of_day' => $data['time_of_day'],
             'comment'     => $data['comment'],

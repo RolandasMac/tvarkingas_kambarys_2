@@ -4,6 +4,7 @@ use App\Domains\Authorization\Controllers\ParentController;
 use App\Domains\Authorization\Controllers\UserController;
 use App\Domains\Room\Controllers\ChildController;
 use App\Domains\Room\Controllers\ParentRoomController;
+use App\Domains\Room\Controllers\RoomController;
 
 // Route::get('/setup-roles', [UserController::class, 'setup']);
 // Route::get('/assign-role/{user}/{role}', [UserController::class, 'assign']);
@@ -15,6 +16,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/assign-role', [UserController::class, 'assign'])->name('assign-role');
     // Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/toggle-block', [UserController::class, 'toggleBlock'])->name('toggleBlock');
+    Route::get('/export-csv', [RoomController::class, 'exportRoomsLogsCsv'])->name('exportRoomsLogsCsv');
 });
 
 Route::middleware(['auth', 'role:parent'])->prefix('parent')->group(function () {

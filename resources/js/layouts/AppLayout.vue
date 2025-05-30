@@ -89,7 +89,7 @@ const login = () => {
                                 <NavLink :href="route('show_child_panel')" :active="route().current('child_panel')"> Child panel </NavLink>
                             </div>
                         </div>
-                        <div>{{ $page.props.auth?.roles }}</div>
+                        <!-- <div>{{ $page.props.auth?.roles }}</div> -->
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <div class="relative ms-3">
                                 <!-- Teams Dropdown -->
